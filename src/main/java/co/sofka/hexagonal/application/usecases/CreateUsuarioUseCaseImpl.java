@@ -1,6 +1,6 @@
 package co.sofka.hexagonal.application.usecases;
 
-import co.sofka.hexagonal.domain.models.DinBodyResponse;
+import co.sofka.hexagonal.domain.models.usuario.DinBodyUsuarioResponse;
 import co.sofka.hexagonal.domain.ports.input.CreateUsuarioUseCase;
 import co.sofka.hexagonal.domain.ports.output.UsuarioRepositoryPort;
 
@@ -13,7 +13,7 @@ public class CreateUsuarioUseCaseImpl implements CreateUsuarioUseCase {
     }
 
     @Override
-    public DinBodyResponse createUsuario(DinBodyResponse dinBodyResponse) {
-        return usuarioRepositoryPort.save(dinBodyResponse);
+    public DinBodyUsuarioResponse createUsuario(DinBodyUsuarioResponse dinBodyUsuarioResponse) {
+        return usuarioRepositoryPort.save(dinBodyUsuarioResponse);
     }
 }
