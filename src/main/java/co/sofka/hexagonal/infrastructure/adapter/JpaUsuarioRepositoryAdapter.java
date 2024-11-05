@@ -1,6 +1,10 @@
 package co.sofka.hexagonal.infrastructure.adapter;
 
-import co.sofka.hexagonal.domain.models.DinBodyResponse;
+import co.sofka.hexagonal.domain.models.din.DinError;
+import co.sofka.hexagonal.domain.models.din.RequestMs;
+import co.sofka.hexagonal.domain.models.din.ResponseMs;
+import co.sofka.hexagonal.domain.models.usuario.DinBodyUsuarioRequest;
+import co.sofka.hexagonal.domain.models.usuario.DinBodyUsuarioResponse;
 import co.sofka.hexagonal.domain.ports.output.UsuarioRepositoryPort;
 import co.sofka.hexagonal.infrastructure.cryptography.Encryption;
 import co.sofka.hexagonal.infrastructure.entities.UsuarioEntity;
@@ -23,36 +27,44 @@ public class JpaUsuarioRepositoryAdapter implements UsuarioRepositoryPort {
     }
 
     @Override
-    public DinBodyResponse save(DinBodyResponse dinBodyResponse) {
-        UsuarioEntity usuarioEntity = UsuarioEntity.fromDomainModel(dinBodyResponse);
+    public DinBodyUsuarioResponse save(DinBodyUsuarioResponse dinBodyUsuarioResponse) {
+        UsuarioEntity usuarioEntity = UsuarioEntity.fromDomainModel(dinBodyUsuarioResponse);
         UsuarioEntity savedUsuarioEntity = jpaUsuarioRepository.save(usuarioEntity);
         return savedUsuarioEntity.toDomainModel();
     }
 
     @Override
-    public Optional<DinBodyResponse> findById(Integer id) {
-        var usuario = jpaUsuarioRepository.findById(id)
+    public ResponseMs<DinBodyUsuarioResponse> findById(RequestMs<DinBodyUsuarioRequest> requestMs) {
+
+        var usuario = jpaUsuarioRepository.findById(requestMs.getDinBody().getId())
                 .map(UsuarioEntity::toDomainModel)//convertir a dominio
                 .map(usuario1 -> {
                     usuario1.setNumeroTarjeta(encryption.encriptAes(usuario1.getNumeroTarjeta()));
                     return usuario1;
                 });
 
-        return usuario;
+        if(usuario.isPresent()){
+            ResponseMs reponseMs = new ResponseMs<>(requestMs.getDinHeader(), usuario, new DinError());
+            return reponseMs;
+        }else{
+            DinError dinError = new DinError("F","Base de datos", "0204", null, "Usuario no econtrado","");
+            ResponseMs responseMs = new ResponseMs(requestMs.getDinHeader(), dinError);
+            return responseMs;
+        }
     }
 
     @Override
-    public List<DinBodyResponse> findAll() {
+    public List<DinBodyUsuarioResponse> findAll() {
         return jpaUsuarioRepository.findAll().stream()
                 .map(UsuarioEntity::toDomainModel)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Optional<DinBodyResponse> update(DinBodyResponse updateDinBodyResponse) {
+    public Optional<DinBodyUsuarioResponse> update(DinBodyUsuarioResponse updateDinBodyUsuarioResponse) {
 
-        if (jpaUsuarioRepository.existsById(updateDinBodyResponse.getId())){
-            UsuarioEntity usuarioEntity = UsuarioEntity.fromDomainModel(updateDinBodyResponse);
+        if (jpaUsuarioRepository.existsById(updateDinBodyUsuarioResponse.getId())){
+            UsuarioEntity usuarioEntity = UsuarioEntity.fromDomainModel(updateDinBodyUsuarioResponse);
             UsuarioEntity updatedUsuarioEntity = jpaUsuarioRepository.save(usuarioEntity);
             return Optional.of(updatedUsuarioEntity.toDomainModel());
         }
