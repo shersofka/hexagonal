@@ -1,6 +1,6 @@
 package co.sofka.hexagonal.application.usecases;
 
-import co.sofka.hexagonal.domain.models.DinBodyResponse;
+import co.sofka.hexagonal.domain.models.usuario.DinBodyUsuarioResponse;
 import co.sofka.hexagonal.domain.ports.input.UpdateUsuarioUseCase;
 import co.sofka.hexagonal.domain.ports.output.UsuarioRepositoryPort;
 
@@ -16,8 +16,8 @@ public class UpdateUsuarioUseCaseImpl implements UpdateUsuarioUseCase {
 
 
     @Override
-    public Optional<DinBodyResponse> updateUsuario(DinBodyResponse updateDinBodyResponse) {
-        return usuarioRepositoryPort.update(updateDinBodyResponse);
+    public Optional<DinBodyUsuarioResponse> updateUsuario(DinBodyUsuarioResponse updateDinBodyUsuarioResponse) {
+        return usuarioRepositoryPort.update(updateDinBodyUsuarioResponse);
     }
 
 }
