@@ -1,8 +1,8 @@
 package co.sofka.hexagonal.domain.ports.input;
 
-import co.sofka.hexagonal.domain.models.DinBodyResponse;
+import co.sofka.hexagonal.domain.models.usuario.DinBodyUsuarioResponse;
 
 public interface CreateUsuarioUseCase {
 
-    DinBodyResponse createUsuario(DinBodyResponse dinBodyResponse);
+    DinBodyUsuarioResponse createUsuario(DinBodyUsuarioResponse dinBodyUsuarioResponse);
 }
