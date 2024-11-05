@@ -1,6 +1,9 @@
 package co.sofka.hexagonal.application.services;
 
-import co.sofka.hexagonal.domain.models.DinBodyResponse;
+import co.sofka.hexagonal.domain.models.din.RequestMs;
+import co.sofka.hexagonal.domain.models.din.ResponseMs;
+import co.sofka.hexagonal.domain.models.usuario.DinBodyUsuarioRequest;
+import co.sofka.hexagonal.domain.models.usuario.DinBodyUsuarioResponse;
 import co.sofka.hexagonal.domain.ports.input.CreateUsuarioUseCase;
 import co.sofka.hexagonal.domain.ports.input.DeleteUsuarioUseCase;
 import co.sofka.hexagonal.domain.ports.input.GetUsuarioUseCase;
@@ -27,8 +30,8 @@ public class UsuarioService implements CreateUsuarioUseCase, GetUsuarioUseCase, 
     }
 
     @Override
-    public DinBodyResponse createUsuario(DinBodyResponse dinBodyResponse) {
-        return createUsuarioUseCase.createUsuario(dinBodyResponse);
+    public DinBodyUsuarioResponse createUsuario(DinBodyUsuarioResponse dinBodyUsuarioResponse) {
+        return createUsuarioUseCase.createUsuario(dinBodyUsuarioResponse);
     }
 
     @Override
@@ -37,17 +40,17 @@ public class UsuarioService implements CreateUsuarioUseCase, GetUsuarioUseCase, 
     }
 
     @Override
-    public Optional<DinBodyResponse> getUsuario(Integer id) {
-        return getUsuarioUseCase.getUsuario(id);
+    public ResponseMs<DinBodyUsuarioResponse> getUsuario(RequestMs<DinBodyUsuarioRequest> requestMs) {
+        return getUsuarioUseCase.getUsuario(requestMs);
     }
 
     @Override
-    public List<DinBodyResponse> getAllUsuarios() {
+    public List<DinBodyUsuarioResponse> getAllUsuarios() {
         return getUsuarioUseCase.getAllUsuarios();
     }
 
     @Override
-    public Optional<DinBodyResponse> updateUsuario(DinBodyResponse updateDinBodyResponse) {
-        return updateUsuarioUseCase.updateUsuario(updateDinBodyResponse);
+    public Optional<DinBodyUsuarioResponse> updateUsuario(DinBodyUsuarioResponse updateDinBodyUsuarioResponse) {
+        return updateUsuarioUseCase.updateUsuario(updateDinBodyUsuarioResponse);
     }
 }
