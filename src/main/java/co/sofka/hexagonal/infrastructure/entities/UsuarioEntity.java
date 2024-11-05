@@ -1,7 +1,7 @@
 package co.sofka.hexagonal.infrastructure.entities;
 
 
-import co.sofka.hexagonal.domain.models.DinBodyResponse;
+import co.sofka.hexagonal.domain.models.usuario.DinBodyUsuarioResponse;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,14 +34,14 @@ public class UsuarioEntity {
         this.numeroProductos = numeroProductos;
     }
 
-    public static UsuarioEntity fromDomainModel(DinBodyResponse dinBodyResponse){
-        var direccionFromModel = DireccionEntity.fromDomainModel(dinBodyResponse.getDireccion());
-        return  new UsuarioEntity(dinBodyResponse.getId(), dinBodyResponse.getNumeroTarjeta(),direccionFromModel, dinBodyResponse.getNumeroProductos());
+    public static UsuarioEntity fromDomainModel(DinBodyUsuarioResponse dinBodyUsuarioResponse){
+        var direccionFromModel = DireccionEntity.fromDomainModel(dinBodyUsuarioResponse.getDireccion());
+        return  new UsuarioEntity(dinBodyUsuarioResponse.getId(), dinBodyUsuarioResponse.getNumeroTarjeta(),direccionFromModel, dinBodyUsuarioResponse.getNumeroProductos());
     }
 
-    public DinBodyResponse toDomainModel(){
+    public DinBodyUsuarioResponse toDomainModel(){
         var direccionFromEntity = DireccionEntity.toDomainModel(direccion);
-        return new DinBodyResponse(id, numeroTarjeta, direccionFromEntity, numeroProductos);
+        return new DinBodyUsuarioResponse(id, numeroTarjeta, direccionFromEntity, numeroProductos);
     }
 
 }
