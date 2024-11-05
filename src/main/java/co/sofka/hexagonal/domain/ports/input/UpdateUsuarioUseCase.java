@@ -1,11 +1,11 @@
 package co.sofka.hexagonal.domain.ports.input;
 
-import co.sofka.hexagonal.domain.models.DinBodyResponse;
+import co.sofka.hexagonal.domain.models.usuario.DinBodyUsuarioResponse;
 
 import java.util.Optional;
 
 public interface UpdateUsuarioUseCase {
 
-Optional<DinBodyResponse> updateUsuario(DinBodyResponse updateDinBodyResponse);
+Optional<DinBodyUsuarioResponse> updateUsuario(DinBodyUsuarioResponse updateDinBodyUsuarioResponse);
 
 }
