@@ -1,7 +1,10 @@
 package co.sofka.hexagonal.infrastructure.controllers;
 
 import co.sofka.hexagonal.application.services.UsuarioService;
-import co.sofka.hexagonal.domain.models.DinBodyResponse;
+import co.sofka.hexagonal.domain.models.din.RequestMs;
+import co.sofka.hexagonal.domain.models.din.ResponseMs;
+import co.sofka.hexagonal.domain.models.usuario.DinBodyUsuarioRequest;
+import co.sofka.hexagonal.domain.models.usuario.DinBodyUsuarioResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,29 +29,27 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<DinBodyResponse> createUsuario(@RequestBody DinBodyResponse dinBodyResponse){
-        DinBodyResponse createdDinBodyResponse = usuarioService.createUsuario(dinBodyResponse);
-        return new ResponseEntity<>(createdDinBodyResponse, HttpStatus.CREATED);
+    public ResponseEntity<DinBodyUsuarioResponse> createUsuario(@RequestBody DinBodyUsuarioResponse dinBodyUsuarioResponse){
+        DinBodyUsuarioResponse createdDinBodyUsuarioResponse = usuarioService.createUsuario(dinBodyUsuarioResponse);
+        return new ResponseEntity<>(createdDinBodyUsuarioResponse, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<DinBodyResponse> getUsuarioById(@PathVariable Integer id){
-    return usuarioService.getUsuario(id)
-            .map(usuario -> new ResponseEntity<>(usuario, HttpStatus.OK))
-            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    @GetMapping("/unico")
+    public ResponseMs<DinBodyUsuarioResponse> getUsuarioById(@RequestBody RequestMs<DinBodyUsuarioRequest> dinBodyUsuarioRequest){
+    return usuarioService.getUsuario(dinBodyUsuarioRequest);
     }
 
 
     @GetMapping
-    public ResponseEntity<List<DinBodyResponse>> getAllUsuarios(){
-        List<DinBodyResponse> dinBodyResponses = usuarioService.getAllUsuarios();
-        return new ResponseEntity<>(dinBodyResponses, HttpStatus.OK);
+    public ResponseEntity<List<DinBodyUsuarioResponse>> getAllUsuarios(){
+        List<DinBodyUsuarioResponse> dinBodyUsuarioRespons = usuarioService.getAllUsuarios();
+        return new ResponseEntity<>(dinBodyUsuarioRespons, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DinBodyResponse> updateUsuario(@PathVariable Integer id,
-                                                         @RequestBody DinBodyResponse updatedDinBodyResponse){
-        return usuarioService.updateUsuario(updatedDinBodyResponse)
+    public ResponseEntity<DinBodyUsuarioResponse> updateUsuario(@PathVariable Integer id,
+                                                                @RequestBody DinBodyUsuarioResponse updatedDinBodyUsuarioResponse){
+        return usuarioService.updateUsuario(updatedDinBodyUsuarioResponse)
                 .map(usuario -> new ResponseEntity<>(usuario, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
 
