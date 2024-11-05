@@ -1,19 +1,22 @@
 package co.sofka.hexagonal.domain.ports.output;
 
-import co.sofka.hexagonal.domain.models.DinBodyResponse;
+import co.sofka.hexagonal.domain.models.din.RequestMs;
+import co.sofka.hexagonal.domain.models.din.ResponseMs;
+import co.sofka.hexagonal.domain.models.usuario.DinBodyUsuarioRequest;
+import co.sofka.hexagonal.domain.models.usuario.DinBodyUsuarioResponse;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface UsuarioRepositoryPort {
 
-    DinBodyResponse save(DinBodyResponse dinBodyResponse);
+    DinBodyUsuarioResponse save(DinBodyUsuarioResponse dinBodyUsuarioResponse);
 
-    Optional<DinBodyResponse> findById(Integer id);
+    ResponseMs<DinBodyUsuarioResponse> findById(RequestMs<DinBodyUsuarioRequest> requestMs);
 
-    List<DinBodyResponse> findAll();
+    List<DinBodyUsuarioResponse> findAll();
 
-    Optional<DinBodyResponse> update(DinBodyResponse updateDinBodyResponse);
+    Optional<DinBodyUsuarioResponse> update(DinBodyUsuarioResponse updateDinBodyUsuarioResponse);
 
     boolean deleteById(Integer id);
 
