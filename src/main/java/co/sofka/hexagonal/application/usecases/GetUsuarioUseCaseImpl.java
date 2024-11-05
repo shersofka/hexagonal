@@ -1,6 +1,9 @@
 package co.sofka.hexagonal.application.usecases;
 
-import co.sofka.hexagonal.domain.models.DinBodyResponse;
+import co.sofka.hexagonal.domain.models.din.RequestMs;
+import co.sofka.hexagonal.domain.models.din.ResponseMs;
+import co.sofka.hexagonal.domain.models.usuario.DinBodyUsuarioRequest;
+import co.sofka.hexagonal.domain.models.usuario.DinBodyUsuarioResponse;
 import co.sofka.hexagonal.domain.ports.input.GetUsuarioUseCase;
 import co.sofka.hexagonal.domain.ports.output.UsuarioRepositoryPort;
 
@@ -15,13 +18,14 @@ public class GetUsuarioUseCaseImpl implements GetUsuarioUseCase {
         this.usuarioRepositoryPort = usuarioRepositoryPort;
     }
 
+
     @Override
-    public Optional<DinBodyResponse> getUsuario(Integer id) {
-        return usuarioRepositoryPort.findById(id);
+    public ResponseMs<DinBodyUsuarioResponse> getUsuario(RequestMs<DinBodyUsuarioRequest> requestMs) {
+        return usuarioRepositoryPort.findById(requestMs);
     }
 
     @Override
-    public List<DinBodyResponse> getAllUsuarios() {
+    public List<DinBodyUsuarioResponse> getAllUsuarios() {
         return usuarioRepositoryPort.findAll();
     }
 }
