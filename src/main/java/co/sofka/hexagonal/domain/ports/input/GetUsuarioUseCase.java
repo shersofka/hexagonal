@@ -1,13 +1,15 @@
 package co.sofka.hexagonal.domain.ports.input;
 
-import co.sofka.hexagonal.domain.models.DinBodyResponse;
+import co.sofka.hexagonal.domain.models.din.RequestMs;
+import co.sofka.hexagonal.domain.models.din.ResponseMs;
+import co.sofka.hexagonal.domain.models.usuario.DinBodyUsuarioRequest;
+import co.sofka.hexagonal.domain.models.usuario.DinBodyUsuarioResponse;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface GetUsuarioUseCase {
 
-    Optional<DinBodyResponse> getUsuario(Integer id);
+    ResponseMs<DinBodyUsuarioResponse> getUsuario(RequestMs<DinBodyUsuarioRequest> requestMs);
 
-    List<DinBodyResponse> getAllUsuarios();
+    List<DinBodyUsuarioResponse> getAllUsuarios();
 }
